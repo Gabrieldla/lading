@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* Estilos personalizados para el carrusel */
+.gallery-swiper {
+  padding: 50px 0 !important;
+}
+
+.gallery-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-swiper .swiper-button-next,
+.gallery-swiper .swiper-button-prev {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gallery-swiper .swiper-button-next:after,
+.gallery-swiper .swiper-button-prev:after {
+  font-size: 20px !important;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.5;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: linear-gradient(to right, #ea580c, #d97706) !important;
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
