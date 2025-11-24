@@ -104,21 +104,20 @@ function Home() {
           className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200"
         >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
+          <div className="flex items-center justify-between h-24">
+            <div className="flex items-center space-x-4">
               <img 
                 src="/logo_bvi-2021.png" 
                 alt="BVI Logo" 
-                className="h-10 w-auto"
+                className="h-16 w-auto"
               />
-              <span className="text-gray-900 font-bold text-xl">Biblioteca Virtual de Ingenieria</span>
+              <span className="text-gray-900 font-bold text-2xl">Biblioteca Virtual de Ingenieria</span>
             </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#inicio" className="text-gray-700 hover:text-gray-900 transition-colors">Inicio</a>
-              <a href="#boletines" className="text-gray-700 hover:text-gray-900 transition-colors">Boletines</a>
-              <a href="#informativos" className="text-gray-700 hover:text-gray-900 transition-colors">Informativos</a>
-              <a href="#galeria" className="text-gray-700 hover:text-gray-900 transition-colors">Galería</a>
-              <a href="#anuales" className="text-gray-700 hover:text-gray-900 transition-colors">Anuales</a>
+            <div className="hidden md:flex space-x-8 text-lg">
+              <a href="https://examurpbvi.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">ExamURP</a>
+              <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors opacity-50 cursor-not-allowed">Estantería Virtual</a>
+              <a href="https://www.urp.edu.pe/pregrado/facultad-de-ingenieria/bvi/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">Página Oficial URP</a>
+              <a href="https://landingsemanaing.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors">Semana Ingeniería</a>
               <Link to="/login" className="text-gray-700 hover:text-gray-900 transition-colors">Login</Link>
             </div>
           </div>
@@ -147,7 +146,7 @@ function Home() {
       </section>
 
       {/* SECCIÓN 2: Boletines Mensuales */}
-      <section id="boletines" className="relative min-h-screen py-32 z-10 -mt-32">
+      <section id="boletines" className="relative py-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <motion.div
             initial="hidden"
@@ -189,7 +188,7 @@ function Home() {
       </section>
 
       {/* SECCIÓN 3: Informativos Mensuales */}
-      <section id="informativos" className="relative min-h-screen py-32 z-10 -mt-32">
+      <section id="informativos" className="relative py-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <motion.div
             initial="hidden"
@@ -231,7 +230,7 @@ function Home() {
       </section>
 
       {/* SECCIÓN 4: Fotogalería */}
-      <section id="galeria" className="relative min-h-screen py-32 z-10 -mt-32">
+      <section id="galeria" className="relative py-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <motion.div
             initial="hidden"
@@ -307,7 +306,7 @@ function Home() {
       </section>
 
       {/* SECCIÓN 5: Boletines Anuales */}
-      <section id="anuales" className="relative min-h-screen py-32 z-10 -mt-32">
+      <section id="anuales" className="relative py-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <motion.div
             initial="hidden"
