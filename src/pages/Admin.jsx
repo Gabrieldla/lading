@@ -103,9 +103,10 @@ function Admin() {
     setLoading(true)
     try {
       if (editingId) {
+        const { id, ...updateData } = boletinMensual
         const { error } = await supabase
           .from('boletines_mensuales')
-          .update(boletinMensual)
+          .update(updateData)
           .eq('id', editingId)
         if (error) throw error
         setMessage('✅ Boletín mensual actualizado exitosamente')
@@ -160,9 +161,10 @@ function Admin() {
     setLoading(true)
     try {
       if (editingId) {
+        const { id, ...updateData } = informativoMensual
         const { error } = await supabase
           .from('informativos_mensuales')
-          .update(informativoMensual)
+          .update(updateData)
           .eq('id', editingId)
         if (error) throw error
         setMessage('✅ Informativo mensual actualizado exitosamente')
@@ -217,9 +219,10 @@ function Admin() {
     setLoading(true)
     try {
       if (editingId) {
+        const { id, ...updateData } = boletinAnual
         const { error } = await supabase
           .from('boletines_anuales')
-          .update(boletinAnual)
+          .update(updateData)
           .eq('id', editingId)
         if (error) throw error
         setMessage('✅ Boletín anual actualizado exitosamente')
@@ -273,9 +276,10 @@ function Admin() {
     setLoading(true)
     try {
       if (editingId) {
+        const { id, ...updateData } = foto
         const { error } = await supabase
           .from('fotogaleria')
-          .update(foto)
+          .update(updateData)
           .eq('id', editingId)
         if (error) throw error
         setMessage('✅ Foto actualizada exitosamente')
