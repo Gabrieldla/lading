@@ -104,11 +104,13 @@ function Admin() {
     try {
       if (editingId) {
         const { id, created_at, ...updateData } = boletinMensual
+        console.log('editingId:', editingId)
+        console.log('boletinMensual.id:', boletinMensual.id)
         console.log('Updating with data:', updateData)
         const { data, error } = await supabase
           .from('boletines_mensuales')
           .update(updateData)
-          .eq('id', editingId)
+          .eq('id', boletinMensual.id)
           .select()
         if (error) throw error
         console.log('Update successful:', data)
@@ -169,7 +171,7 @@ function Admin() {
         const { data, error } = await supabase
           .from('informativos_mensuales')
           .update(updateData)
-          .eq('id', editingId)
+          .eq('id', informativoMensual.id)
           .select()
         if (error) throw error
         console.log('Update successful:', data)
@@ -230,7 +232,7 @@ function Admin() {
         const { data, error } = await supabase
           .from('boletines_anuales')
           .update(updateData)
-          .eq('id', editingId)
+          .eq('id', boletinAnual.id)
           .select()
         if (error) throw error
         console.log('Update successful:', data)
@@ -290,7 +292,7 @@ function Admin() {
         const { data, error } = await supabase
           .from('fotogaleria')
           .update(updateData)
-          .eq('id', editingId)
+          .eq('id', foto.id)
           .select()
         if (error) throw error
         console.log('Update successful:', data)
