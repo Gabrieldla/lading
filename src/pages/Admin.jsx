@@ -104,16 +104,11 @@ function Admin() {
     try {
       if (editingId) {
         const { id, created_at, ...updateData } = boletinMensual
-        console.log('editingId:', editingId)
-        console.log('boletinMensual.id:', boletinMensual.id)
-        console.log('Updating with data:', updateData)
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('boletines_mensuales')
           .update(updateData)
           .eq('id', boletinMensual.id)
-          .select()
         if (error) throw error
-        console.log('Update successful:', data)
         setMessage('✅ Boletín mensual actualizado exitosamente')
         setEditingId(null)
       } else {
@@ -167,14 +162,11 @@ function Admin() {
     try {
       if (editingId) {
         const { id, created_at, ...updateData } = informativoMensual
-        console.log('Updating informativo with data:', updateData)
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('informativos_mensuales')
           .update(updateData)
           .eq('id', informativoMensual.id)
-          .select()
         if (error) throw error
-        console.log('Update successful:', data)
         setMessage('✅ Informativo mensual actualizado exitosamente')
         setEditingId(null)
       } else {
@@ -228,14 +220,11 @@ function Admin() {
     try {
       if (editingId) {
         const { id, created_at, ...updateData } = boletinAnual
-        console.log('Updating boletin anual with data:', updateData)
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('boletines_anuales')
           .update(updateData)
           .eq('id', boletinAnual.id)
-          .select()
         if (error) throw error
-        console.log('Update successful:', data)
         setMessage('✅ Boletín anual actualizado exitosamente')
         setEditingId(null)
       } else {
@@ -288,14 +277,11 @@ function Admin() {
     try {
       if (editingId) {
         const { id, created_at, ...updateData } = foto
-        console.log('Updating foto with data:', updateData)
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('fotogaleria')
           .update(updateData)
           .eq('id', foto.id)
-          .select()
         if (error) throw error
-        console.log('Update successful:', data)
         setMessage('✅ Foto actualizada exitosamente')
         setEditingId(null)
       } else {
