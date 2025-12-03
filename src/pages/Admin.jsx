@@ -494,7 +494,7 @@ function Admin() {
                       value={boletinMensual.año}
                       onChange={(e) => setBoletinMensual({...boletinMensual, año: parseInt(e.target.value)})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      min="2020"
+                      min="2004"
                       max="2099"
                     />
                   </div>
@@ -651,7 +651,7 @@ function Admin() {
                       value={informativoMensual.año}
                       onChange={(e) => setInformativoMensual({...informativoMensual, año: parseInt(e.target.value)})}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      min="2020"
+                      min="2004"
                       max="2099"
                     />
                   </div>
@@ -807,7 +807,7 @@ function Admin() {
                     value={boletinAnual.año}
                     onChange={(e) => setBoletinAnual({...boletinAnual, año: parseInt(e.target.value)})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    min="2020"
+                    min="2004"
                     max="2099"
                   />
                 </div>

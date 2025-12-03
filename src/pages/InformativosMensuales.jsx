@@ -31,27 +31,19 @@ function InformativosMensuales() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      {/* Header con imagen de portada */}
+      {/* Header */}
       <header className="bg-white shadow-md">
-        <div className="relative h-64 md:h-80 overflow-hidden">
-          <img 
-            src="/InformativosMensuales.jpg" 
-            alt="Informativos Mensuales"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
-          <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 py-6">
-            <Link to="/" className="inline-flex items-center text-white hover:text-green-200 mb-4">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Volver al inicio
-            </Link>
-            <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
-              Informativos Mensuales
-            </h1>
-            <p className="text-white/90 mt-2 text-lg">Selecciona un año para ver los informativos mensuales</p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <Link to="/" className="inline-flex items-center text-green-600 hover:text-green-800 mb-4">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Volver al inicio
+          </Link>
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600">
+            Informativos Mensuales
+          </h1>
+          <p className="text-gray-600 mt-2 text-lg">Selecciona un año para ver los informativos mensuales</p>
         </div>
       </header>
 

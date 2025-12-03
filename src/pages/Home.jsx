@@ -158,7 +158,7 @@ function Home() {
             <motion.div variants={fadeInLeft} className="order-2 md:order-1">
               <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
                 <img 
-                  src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800" 
+                  src="/boletinesmensuales.jpg" 
                   alt="Boletines Mensuales"
                   className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
                 />
@@ -200,7 +200,7 @@ function Home() {
             <motion.div variants={fadeInRight} className="order-2 md:order-1">
               <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
                 <img 
-                  src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800" 
+                  src="/InformativosMensuales.jpg" 
                   alt="Informativos Mensuales"
                   className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
                 />
@@ -318,7 +318,7 @@ function Home() {
             <motion.div variants={fadeInLeft} className="order-2 md:order-1">
               <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
                 <img 
-                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800" 
+                  src="/Boletinesanuales.jpg" 
                   alt="Boletines Anuales"
                   className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
                 />
