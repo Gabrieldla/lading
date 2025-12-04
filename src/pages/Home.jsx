@@ -1,48 +1,8 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { BackgroundBeamsWithCollision } from '@/components/ui/shadcn-io/background-beams-with-collision'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-import 'swiper/css/effect-coverflow'
-import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
 
 function Home() {
-  const [galleryImages, setGalleryImages] = useState([
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800',
-    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800',
-    'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800',
-    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800',
-  ])
-
-  useEffect(() => {
-    fetchGalleryImages()
-  }, [])
-
-  const fetchGalleryImages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('fotogaleria')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(12)
-      
-      if (error) throw error
-      
-      if (data && data.length > 0) {
-        const images = data.map(item => item.imagen_url)
-        setGalleryImages(images)
-      }
-    } catch (error) {
-      console.error('Error fetching gallery images:', error)
-    }
-  }
-  
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
     visible: { 
@@ -229,83 +189,7 @@ function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN 4: Fotogalería */}
-      <section id="galeria" className="relative py-20 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-600">Fotogalería</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Una colección visual de nuestros eventos, actividades y logros
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <Swiper
-              modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              loop={true}
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-              }}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-              pagination={{ clickable: true }}
-              navigation={true}
-              className="gallery-swiper"
-            >
-              {galleryImages.map((image, index) => (
-                <SwiperSlide key={index} style={{ width: '600px' }}>
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
-                    <img
-                      src={image}
-                      alt={`Galería ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            <div className="text-center mt-16">
-              <Link
-                to="/fotogaleria"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-orange-500/50"
-              >
-                Ver Galería Completa
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SECCIÓN 5: Boletines Anuales */}
+      {/* SECCIÓN 4: Boletines Anuales */}
       <section id="anuales" className="relative py-20 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <motion.div
@@ -338,6 +222,90 @@ function Home() {
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-600 to-amber-600 rounded-full text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-orange-500/50"
               >
                 Ver Boletines Anuales
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 5: Fotogalería Semestrales */}
+      <section id="fotogaleria-semestrales" className="relative py-20 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-16 items-center"
+          >
+            <motion.div variants={fadeInRight} className="order-2 md:order-1">
+              <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800" 
+                  alt="Fotogalería Semestrales"
+                  className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeInLeft} className="order-1 md:order-2">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Fotogalería <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-orange-600">Semestral</span>
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Descubre las galerías organizadas por semestre académico. 
+                Cada periodo tiene su propia historia visual que contar.
+              </p>
+              <Link 
+                to="/fotogaleria-semestrales"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-rose-600 to-orange-600 rounded-full text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-rose-500/50"
+              >
+                Ver Fotos Semestrales
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECCIÓN 6: Fotogalería Anuales */}
+      <section id="fotogaleria-anuales" className="relative py-20 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-16 items-center"
+          >
+            <motion.div variants={fadeInLeft} className="order-2 md:order-1">
+              <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800" 
+                  alt="Fotogalería Anuales"
+                  className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeInRight} className="order-1 md:order-2">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Fotogalería <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">Anual</span>
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Explora nuestra colección de fotografías organizadas por año. 
+                Revive los momentos más importantes de cada periodo académico.
+              </p>
+              <Link 
+                to="/fotogaleria-anuales"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-purple-500/50"
+              >
+                Ver Fotos Anuales
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>

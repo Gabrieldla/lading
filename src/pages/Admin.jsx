@@ -14,7 +14,8 @@ function Admin() {
   const [boletinesMensualesList, setBoletinesMensualesList] = useState([])
   const [informativosMensualesList, setInformativosMensualesList] = useState([])
   const [boletinesAnualesList, setBoletinesAnualesList] = useState([])
-  const [fotogaleriaList, setFotogaleriaList] = useState([])
+  const [fotogaleriaAnualesList, setFotogaleriaAnualesList] = useState([])
+  const [fotogaleriaSemestralesList, setFotogaleriaSemestralesList] = useState([])
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -48,10 +49,21 @@ function Admin() {
     año: new Date().getFullYear()
   })
 
-  const [foto, setFoto] = useState({
+  const [fotoAnual, setFotoAnual] = useState({
     titulo: '',
     descripcion: '',
-    imagen_url: ''
+    imagen_url: '',
+    link: '',
+    año: new Date().getFullYear()
+  })
+
+  const [fotoSemestral, setFotoSemestral] = useState({
+    titulo: '',
+    descripcion: '',
+    imagen_url: '',
+    link: '',
+    año: new Date().getFullYear(),
+    semestre: 1
   })
 
   // Cargar datos al cambiar de tab
@@ -84,13 +96,21 @@ function Admin() {
           .order('año', { ascending: false })
         if (error) throw error
         setBoletinesAnualesList(data || [])
-      } else if (activeTab === 'fotogaleria') {
+      } else if (activeTab === 'fotogaleria-anuales') {
         const { data, error } = await supabase
-          .from('fotogaleria')
+          .from('fotogaleria_anuales')
           .select('*')
-          .order('created_at', { ascending: false })
+          .order('año', { ascending: false })
         if (error) throw error
-        setFotogaleriaList(data || [])
+        setFotogaleriaAnualesList(data || [])
+      } else if (activeTab === 'fotogaleria-semestrales') {
+        const { data, error } = await supabase
+          .from('fotogaleria_semestrales')
+          .select('*')
+          .order('año', { ascending: false })
+          .order('semestre', { ascending: false })
+        if (error) throw error
+        setFotogaleriaSemestralesList(data || [])
       }
     } catch (error) {
       console.error('Error loading data:', error)
@@ -270,32 +290,34 @@ function Admin() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Función para agregar/editar foto
-  const handleAddFoto = async (e) => {
+  // Función para agregar/editar foto anual
+  const handleAddFotoAnual = async (e) => {
     e.preventDefault()
     setLoading(true)
     try {
       if (editingId) {
-        const { id, created_at, ...updateData } = foto
+        const { id, created_at, ...updateData } = fotoAnual
         const { error } = await supabase
-          .from('fotogaleria')
+          .from('fotogaleria_anuales')
           .update(updateData)
-          .eq('id', foto.id)
+          .eq('id', fotoAnual.id)
         if (error) throw error
-        setMessage('✅ Foto actualizada exitosamente')
+        setMessage('✅ Foto anual actualizada exitosamente')
         setEditingId(null)
       } else {
         const { error } = await supabase
-          .from('fotogaleria')
-          .insert([foto])
+          .from('fotogaleria_anuales')
+          .insert([fotoAnual])
         if (error) throw error
-        setMessage('✅ Foto agregada exitosamente')
+        setMessage('✅ Foto anual agregada exitosamente')
       }
       
-      setFoto({
+      setFotoAnual({
         titulo: '',
         descripcion: '',
-        imagen_url: ''
+        imagen_url: '',
+        link: '',
+        año: new Date().getFullYear()
       })
       loadData()
     } catch (error) {
@@ -304,23 +326,81 @@ function Admin() {
     setLoading(false)
   }
 
-  const handleDeleteFoto = async (id) => {
-    if (!confirm('¿Estás seguro de eliminar esta foto?')) return
+  const handleDeleteFotoAnual = async (id) => {
+    if (!confirm('¿Estás seguro de eliminar esta foto anual?')) return
     try {
       const { error } = await supabase
-        .from('fotogaleria')
+        .from('fotogaleria_anuales')
         .delete()
         .eq('id', id)
       if (error) throw error
-      setMessage('✅ Foto eliminada exitosamente')
+      setMessage('✅ Foto anual eliminada exitosamente')
       loadData()
     } catch (error) {
       setMessage('❌ Error: ' + error.message)
     }
   }
 
-  const handleEditFoto = (item) => {
-    setFoto(item)
+  const handleEditFotoAnual = (item) => {
+    setFotoAnual(item)
+    setEditingId(item.id)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Función para agregar/editar foto semestral
+  const handleAddFotoSemestral = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      if (editingId) {
+        const { id, created_at, ...updateData } = fotoSemestral
+        const { error } = await supabase
+          .from('fotogaleria_semestrales')
+          .update(updateData)
+          .eq('id', fotoSemestral.id)
+        if (error) throw error
+        setMessage('✅ Foto semestral actualizada exitosamente')
+        setEditingId(null)
+      } else {
+        const { error } = await supabase
+          .from('fotogaleria_semestrales')
+          .insert([fotoSemestral])
+        if (error) throw error
+        setMessage('✅ Foto semestral agregada exitosamente')
+      }
+      
+      setFotoSemestral({
+        titulo: '',
+        descripcion: '',
+        imagen_url: '',
+        link: '',
+        año: new Date().getFullYear(),
+        semestre: 1
+      })
+      loadData()
+    } catch (error) {
+      setMessage('❌ Error: ' + error.message)
+    }
+    setLoading(false)
+  }
+
+  const handleDeleteFotoSemestral = async (id) => {
+    if (!confirm('¿Estás seguro de eliminar esta foto semestral?')) return
+    try {
+      const { error } = await supabase
+        .from('fotogaleria_semestrales')
+        .delete()
+        .eq('id', id)
+      if (error) throw error
+      setMessage('✅ Foto semestral eliminada exitosamente')
+      loadData()
+    } catch (error) {
+      setMessage('❌ Error: ' + error.message)
+    }
+  }
+
+  const handleEditFotoSemestral = (item) => {
+    setFotoSemestral(item)
     setEditingId(item.id)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -413,14 +493,24 @@ function Admin() {
               Boletines Anuales
             </button>
             <button
-              onClick={() => setActiveTab('fotogaleria')}
+              onClick={() => setActiveTab('fotogaleria-anuales')}
               className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'fotogaleria'
+                activeTab === 'fotogaleria-anuales'
                   ? 'border-orange-500 text-orange-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              Fotogalería
+              Fotogalería Anuales
+            </button>
+            <button
+              onClick={() => setActiveTab('fotogaleria-semestrales')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'fotogaleria-semestrales'
+                  ? 'border-orange-500 text-orange-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Fotogalería Semestrales
             </button>
           </nav>
         </div>
@@ -887,51 +977,74 @@ function Admin() {
             </>
           )}
 
-          {/* Formulario: Fotogaleria */}
-          {activeTab === 'fotogaleria' && (
+          {/* Formulario: Fotogaleria Anuales */}
+          {activeTab === 'fotogaleria-anuales' && (
             <>
             <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                {editingId ? 'Editar Foto' : 'Agregar Foto a Galeria'}
+                {editingId ? 'Editar Foto Anual' : 'Agregar Foto Anual a Galería'}
               </h2>
-              <form onSubmit={handleAddFoto} className="space-y-6">
+              <form onSubmit={handleAddFotoAnual} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
                   <input
                     type="text"
                     required
-                    value={foto.titulo}
-                    onChange={(e) => setFoto({...foto, titulo: e.target.value})}
+                    value={fotoAnual.titulo}
+                    onChange={(e) => setFotoAnual({...fotoAnual, titulo: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    placeholder="Ej: Evento de Graduación"
+                    placeholder="Ej: Galería Anual 2024"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">URL de la Imagen</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">URL de la Imagen de Portada</label>
                   <input
                     type="url"
                     required
-                    value={foto.imagen_url}
-                    onChange={(e) => setFoto({...foto, imagen_url: e.target.value})}
+                    value={fotoAnual.imagen_url}
+                    onChange={(e) => setFotoAnual({...fotoAnual, imagen_url: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    placeholder="https://ejemplo.com/foto.jpg"
+                    placeholder="https://ejemplo.com/portada.jpg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Link de la Galería</label>
+                  <input
+                    type="url"
+                    required
+                    value={fotoAnual.link}
+                    onChange={(e) => setFotoAnual({...fotoAnual, link: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    placeholder="https://photos.google.com/..."
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
                   <textarea
-                    value={foto.descripcion}
-                    onChange={(e) => setFoto({...foto, descripcion: e.target.value})}
+                    value={fotoAnual.descripcion}
+                    onChange={(e) => setFotoAnual({...fotoAnual, descripcion: e.target.value})}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     rows="3"
                     placeholder="Descripción de la foto..."
                   />
                 </div>
-                {foto.imagen_url && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Año</label>
+                  <input
+                    type="number"
+                    required
+                    value={fotoAnual.año}
+                    onChange={(e) => setFotoAnual({...fotoAnual, año: parseInt(e.target.value)})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    min="2004"
+                    max="2099"
+                  />
+                </div>
+                {fotoAnual.imagen_url && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Vista Previa</label>
                     <img 
-                      src={foto.imagen_url} 
+                      src={fotoAnual.imagen_url} 
                       alt="Preview" 
                       className="w-full max-w-md rounded-lg shadow-md"
                       onError={(e) => e.target.style.display = 'none'}
@@ -951,10 +1064,12 @@ function Admin() {
                       type="button"
                       onClick={() => {
                         setEditingId(null)
-                        setFoto({
+                        setFotoAnual({
                           titulo: '',
                           descripcion: '',
-                          imagen_url: ''
+                          imagen_url: '',
+                          link: '',
+                          año: new Date().getFullYear()
                         })
                       }}
                       className="px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
@@ -966,28 +1081,184 @@ function Admin() {
               </form>
             </div>
 
-            {/* Lista de Fotogalería */}
+            {/* Lista de Fotogalería Anuales */}
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Fotos en Galería</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Fotos Anuales en Galería</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {fotogaleriaList.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8 col-span-full">No hay fotos en la galería</p>
+                {fotogaleriaAnualesList.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8 col-span-full">No hay fotos anuales en la galería</p>
                 ) : (
-                  fotogaleriaList.map((item) => (
+                  fotogaleriaAnualesList.map((item) => (
                     <div key={item.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                       <img src={item.imagen_url} alt={item.titulo} className="w-full h-48 object-cover" />
                       <div className="p-4">
                         <h3 className="font-bold text-gray-900">{item.titulo}</h3>
                         <p className="text-gray-600 text-sm mt-1">{item.descripcion}</p>
+                        <p className="text-gray-500 text-xs mt-2">Año: {item.año}</p>
                         <div className="flex gap-2 mt-4">
                           <button
-                            onClick={() => handleEditFoto(item)}
+                            onClick={() => handleEditFotoAnual(item)}
                             className="flex-1 p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
                           >
                             Editar
                           </button>
                           <button
-                            onClick={() => handleDeleteFoto(item.id)}
+                            onClick={() => handleDeleteFotoAnual(item.id)}
+                            className="flex-1 p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+            </>
+          )}
+
+          {/* Formulario: Fotogaleria Semestrales */}
+          {activeTab === 'fotogaleria-semestrales' && (
+            <>
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                {editingId ? 'Editar Foto Semestral' : 'Agregar Foto Semestral a Galería'}
+              </h2>
+              <form onSubmit={handleAddFotoSemestral} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                  <input
+                    type="text"
+                    required
+                    value={fotoSemestral.titulo}
+                    onChange={(e) => setFotoSemestral({...fotoSemestral, titulo: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    placeholder="Ej: Galería Primer Semestre 2024"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">URL de la Imagen de Portada</label>
+                  <input
+                    type="url"
+                    required
+                    value={fotoSemestral.imagen_url}
+                    onChange={(e) => setFotoSemestral({...fotoSemestral, imagen_url: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    placeholder="https://ejemplo.com/portada.jpg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Link de la Galería</label>
+                  <input
+                    type="url"
+                    required
+                    value={fotoSemestral.link}
+                    onChange={(e) => setFotoSemestral({...fotoSemestral, link: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    placeholder="https://photos.google.com/..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                  <textarea
+                    value={fotoSemestral.descripcion}
+                    onChange={(e) => setFotoSemestral({...fotoSemestral, descripcion: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    rows="3"
+                    placeholder="Descripción de la foto..."
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Año</label>
+                    <input
+                      type="number"
+                      required
+                      value={fotoSemestral.año}
+                      onChange={(e) => setFotoSemestral({...fotoSemestral, año: parseInt(e.target.value)})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      min="2004"
+                      max="2099"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Semestre</label>
+                    <select
+                      value={fotoSemestral.semestre}
+                      onChange={(e) => setFotoSemestral({...fotoSemestral, semestre: parseInt(e.target.value)})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    >
+                      <option value={1}>Primer Semestre</option>
+                      <option value={2}>Segundo Semestre</option>
+                    </select>
+                  </div>
+                </div>
+                {fotoSemestral.imagen_url && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Vista Previa</label>
+                    <img 
+                      src={fotoSemestral.imagen_url} 
+                      alt="Preview" 
+                      className="w-full max-w-md rounded-lg shadow-md"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                )}
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (editingId ? 'Actualizando...' : 'Agregando...') : (editingId ? 'Actualizar Foto' : 'Agregar Foto')}
+                  </button>
+                  {editingId && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingId(null)
+                        setFotoSemestral({
+                          titulo: '',
+                          descripcion: '',
+                          imagen_url: '',
+                          link: '',
+                          año: new Date().getFullYear(),
+                          semestre: 1
+                        })
+                      }}
+                      className="px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            {/* Lista de Fotogalería Semestrales */}
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Fotos Semestrales en Galería</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {fotogaleriaSemestralesList.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8 col-span-full">No hay fotos semestrales en la galería</p>
+                ) : (
+                  fotogaleriaSemestralesList.map((item) => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                      <img src={item.imagen_url} alt={item.titulo} className="w-full h-48 object-cover" />
+                      <div className="p-4">
+                        <h3 className="font-bold text-gray-900">{item.titulo}</h3>
+                        <p className="text-gray-600 text-sm mt-1">{item.descripcion}</p>
+                        <p className="text-gray-500 text-xs mt-2">Año: {item.año} - {item.semestre === 1 ? 'Primer' : 'Segundo'} Semestre</p>
+                        <div className="flex gap-2 mt-4">
+                          <button
+                            onClick={() => handleEditFotoSemestral(item)}
+                            className="flex-1 p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() => handleDeleteFotoSemestral(item.id)}
                             className="flex-1 p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
                           >
                             Eliminar

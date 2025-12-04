@@ -4,7 +4,8 @@ import BoletinesMensuales from './pages/BoletinesMensuales'
 import BoletinesMensualesYear from './pages/BoletinesMensualesYear'
 import InformativosMensuales from './pages/InformativosMensuales'
 import InformativosMensualesYear from './pages/InformativosMensualesYear'
-import Fotogaleria from './pages/Fotogaleria'
+import FotogaleriaAnuales from './pages/FotogaleriaAnuales'
+import FotogaleriaSemestrales from './pages/FotogaleriaSemestrales'
 import BoletinesAnuales from './pages/BoletinesAnuales'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
@@ -19,7 +20,8 @@ function App() {
         <Route path="/boletines-mensuales/:year" element={<BoletinesMensualesYear />} />
         <Route path="/informativos-mensuales" element={<InformativosMensuales />} />
         <Route path="/informativos-mensuales/:year" element={<InformativosMensualesYear />} />
-        <Route path="/fotogaleria" element={<Fotogaleria />} />
+        <Route path="/fotogaleria-anuales" element={<FotogaleriaAnuales />} />
+        <Route path="/fotogaleria-semestrales" element={<FotogaleriaSemestrales />} />
         <Route path="/boletines-anuales" element={<BoletinesAnuales />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={
