@@ -103,6 +103,34 @@ function Home() {
           >
           </motion.p>
         </div>
+
+        {/* Botón para ir hacia abajo */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+        >
+          <motion.a
+            href="#boletines"
+            className="inline-flex flex-col items-center gap-2 cursor-pointer group"
+            animate={{
+              y: [0, 10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <span className="text-sm text-gray-500 group-hover:text-orange-600 transition-colors font-medium">Explorar</span>
+            <div className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-orange-600 group-hover:bg-orange-100 transition-all">
+              <svg className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </motion.a>
+        </motion.div>
       </section>
 
       {/* SECCIÓN 2: Boletines Mensuales */}
@@ -313,35 +341,35 @@ function Home() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Botón para volver arriba */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.a
-            href="#inicio"
-            className="inline-flex flex-col items-center gap-2 cursor-pointer group"
-            animate={{
-              y: [0, -10, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <span className="text-sm text-gray-500 group-hover:text-orange-600 transition-colors">Volver arriba</span>
-            <div className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-orange-600 group-hover:bg-orange-100 transition-all">
-              <svg className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-              </svg>
-            </div>
-          </motion.a>
-        </motion.div>
       </section>
+
+      {/* Botón para volver arriba - Flotante */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="fixed bottom-8 right-8 z-50"
+      >
+        <motion.a
+          href="#inicio"
+          className="inline-flex flex-col items-center gap-2 cursor-pointer group bg-white rounded-full p-4 shadow-xl hover:shadow-2xl transition-all"
+          animate={{
+            y: [0, -10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-orange-600 group-hover:bg-orange-100 transition-all">
+            <svg className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            </svg>
+          </div>
+          <span className="text-xs text-gray-500 group-hover:text-orange-600 transition-colors font-medium">Arriba</span>
+        </motion.a>
+      </motion.div>
       </div>
     </div>
   )
